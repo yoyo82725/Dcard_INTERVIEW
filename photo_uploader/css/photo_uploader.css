@@ -1,0 +1,22 @@
+* { box-sizing: border-box; transition: all .2s; }
+body { background-color: #EEE; }
+#photo_uploader { position: relative; }
+#photo_uploader>.img_block { position: relative; display: inline-block; font-size: 0; z-index: 10; }
+#photo_uploader>.img_block>.drop_mask { position: absolute; top: 0; left: 0; background-color: rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: gray; opacity: 0; }
+#photo_uploader>.img_block>.crop_items { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+#photo_uploader>.img_block>.crop_items>.top { position: absolute; top: 0; left: 0; right: 0; bottom: initial; background-color: rgba(0,0,0,.7); border-bottom: 1px solid blue; cursor: n-resize; }
+#photo_uploader>.img_block>.crop_items>.right { position: absolute; top: 0; left: initial; right: 0; bottom: 0; background-color: rgba(0,0,0,.7); border-left: 1px solid blue; cursor: e-resize; }
+#photo_uploader>.img_block>.crop_items>.bottom { position: absolute; top: initial; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.7); border-top: 1px solid blue; cursor: n-resize; }
+#photo_uploader>.img_block>.crop_items>.left { position: absolute; top: 0; left: 0; right: initial; bottom: 0; background-color: rgba(0,0,0,.7); border-right: 1px solid blue; cursor: e-resize; }
+#photo_uploader>.img_block>.crop_items>.check_block { position: absolute; top: 101%; right: 0; }
+#photo_uploader>.img_block>.crop_items>.check_block>div { display: inline-block; cursor: pointer; }
+#photo_uploader>.img_block>.crop_items>.check_block>div path { fill: antiquewhite; }
+#photo_uploader>.img_block>.crop_items>.check_block>div:hover path { fill: aqua; }
+#photo_uploader>.img_block>.mosaic_items { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 15; }
+#photo_uploader>.img_block>.mosaic_items>.check_block { position: absolute; top: 101%; right: 0; }
+#photo_uploader>.img_block>.mosaic_items>.check_block>div { display: inline-block; cursor: pointer; }
+#photo_uploader>.img_block>.mosaic_items>.check_block>div path { fill: antiquewhite; }
+#photo_uploader>.img_block>.mosaic_items>.check_block>div:hover path { fill: aqua; }
+#photo_uploader>.disable_mask { background-color: rgba(0,0,0,.7); z-index: 5; position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+#photo_uploader>.function_block>.toolbar { padding: 20px; }
+

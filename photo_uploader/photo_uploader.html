@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Photo_Uploader" />
+		<meta name="author" content="John.c Wei" />
+
+		<title>Photo_Uploader</title>
+
+		<link href="css/reset.css" rel="stylesheet" />
+		<link href="css/photo_uploader.css" rel="stylesheet" />
+	</head>
+
+	<body>
+
+		<div id="photo_uploader">
+
+			<div class="img_block">
+				<img class="loading" src="css/img/loading124.gif">
+				<canvas></canvas>
+
+				<!-- 拖曳遮罩 -->
+				<div class="drop_mask">...拖曳上傳...</div>
+
+				<!-- 裁切遮罩 -->
+				<div class="crop_items" style="display:none;">
+
+					<!-- 裁切框 -->
+					<div class="top" name="top" draggable="false"></div>
+					<div class="right" name="right" draggable="false"></div>
+					<div class="bottom" name="bottom" draggable="false"></div>
+					<div class="left" name="left" draggable="false"></div>
+
+					<!-- 裁切確認 -->
+					<div class="check_block">
+						<!-- 勾勾 -->
+						<div class="ok" onclick="Photo_Uploader.complete_crop();">
+							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 20 20">
+								<path d="M9.5 20c-2.538 0-4.923-0.988-6.718-2.782s-2.782-4.18-2.782-6.717c0-2.538 0.988-4.923 2.782-6.718s4.18-2.783 6.718-2.783c2.538 0 4.923 0.988 6.718 2.783s2.782 4.18 2.782 6.718-0.988 4.923-2.782 6.717c-1.794 1.794-4.18 2.782-6.718 2.782zM9.5 2c-4.687 0-8.5 3.813-8.5 8.5s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5-3.813-8.5-8.5-8.5z"></path>
+								<path d="M7.5 14.5c-0.128 0-0.256-0.049-0.354-0.146l-3-3c-0.195-0.195-0.195-0.512 0-0.707s0.512-0.195 0.707 0l2.646 2.646 6.646-6.646c0.195-0.195 0.512-0.195 0.707 0s0.195 0.512 0 0.707l-7 7c-0.098 0.098-0.226 0.146-0.354 0.146z"></path>
+							</svg>
+						</div>
+						<!-- 叉叉 -->
+						<div class="no" onclick="Photo_Uploader.close_crop_mode();">
+							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 20 20">
+								<path d="M14.332 14.126l-4.080-3.626 4.080-3.626c0.206-0.183 0.225-0.499 0.042-0.706s-0.499-0.225-0.706-0.042l-4.168 3.705-4.168-3.705c-0.206-0.183-0.522-0.165-0.706 0.042s-0.165 0.522 0.042 0.706l4.080 3.626-4.080 3.626c-0.206 0.183-0.225 0.499-0.042 0.706 0.099 0.111 0.236 0.168 0.374 0.168 0.118 0 0.237-0.042 0.332-0.126l4.168-3.705 4.168 3.705c0.095 0.085 0.214 0.126 0.332 0.126 0.138 0 0.275-0.057 0.374-0.168 0.183-0.206 0.165-0.522-0.042-0.706z"></path>
+								<path d="M9.5 20c-2.538 0-4.923-0.988-6.718-2.782s-2.782-4.18-2.782-6.717c0-2.538 0.988-4.923 2.782-6.718s4.18-2.783 6.718-2.783c2.538 0 4.923 0.988 6.718 2.783s2.782 4.18 2.782 6.718-0.988 4.923-2.782 6.717c-1.794 1.794-4.18 2.782-6.718 2.782zM9.5 2c-4.687 0-8.5 3.813-8.5 8.5s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5-3.813-8.5-8.5-8.5z"></path>
+							</svg>
+						</div>
+					</div>
+				</div>
+
+				<!-- 馬賽克遮罩 -->
+				<div class="mosaic_items" style="display:none;">
+
+					<!-- 馬賽克確認 -->
+					<div class="check_block">
+						<!-- 勾勾 -->
+						<div class="ok" onclick="Photo_Uploader.complete_mosaic();">
+							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 20 20">
+								<path d="M9.5 20c-2.538 0-4.923-0.988-6.718-2.782s-2.782-4.18-2.782-6.717c0-2.538 0.988-4.923 2.782-6.718s4.18-2.783 6.718-2.783c2.538 0 4.923 0.988 6.718 2.783s2.782 4.18 2.782 6.718-0.988 4.923-2.782 6.717c-1.794 1.794-4.18 2.782-6.718 2.782zM9.5 2c-4.687 0-8.5 3.813-8.5 8.5s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5-3.813-8.5-8.5-8.5z"></path>
+								<path d="M7.5 14.5c-0.128 0-0.256-0.049-0.354-0.146l-3-3c-0.195-0.195-0.195-0.512 0-0.707s0.512-0.195 0.707 0l2.646 2.646 6.646-6.646c0.195-0.195 0.512-0.195 0.707 0s0.195 0.512 0 0.707l-7 7c-0.098 0.098-0.226 0.146-0.354 0.146z"></path>
+							</svg>
+						</div>
+						<!-- 叉叉 -->
+						<div class="no" onclick="Photo_Uploader.close_mosaic_mode();">
+							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 20 20">
+								<path d="M14.332 14.126l-4.080-3.626 4.080-3.626c0.206-0.183 0.225-0.499 0.042-0.706s-0.499-0.225-0.706-0.042l-4.168 3.705-4.168-3.705c-0.206-0.183-0.522-0.165-0.706 0.042s-0.165 0.522 0.042 0.706l4.080 3.626-4.080 3.626c-0.206 0.183-0.225 0.499-0.042 0.706 0.099 0.111 0.236 0.168 0.374 0.168 0.118 0 0.237-0.042 0.332-0.126l4.168-3.705 4.168 3.705c0.095 0.085 0.214 0.126 0.332 0.126 0.138 0 0.275-0.057 0.374-0.168 0.183-0.206 0.165-0.522-0.042-0.706z"></path>
+								<path d="M9.5 20c-2.538 0-4.923-0.988-6.718-2.782s-2.782-4.18-2.782-6.717c0-2.538 0.988-4.923 2.782-6.718s4.18-2.783 6.718-2.783c2.538 0 4.923 0.988 6.718 2.783s2.782 4.18 2.782 6.718-0.988 4.923-2.782 6.717c-1.794 1.794-4.18 2.782-6.718 2.782zM9.5 2c-4.687 0-8.5 3.813-8.5 8.5s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5-3.813-8.5-8.5-8.5z"></path>
+							</svg>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="disable_mask" style="display:none;"></div>
+
+			<div class="function_block">
+
+				<div class="toolbar">
+					<input type="button" value="原圖" onclick="Photo_Uploader.back_modify();">
+					<input type="button" value="裁切" onclick="Photo_Uploader.open_crop_mode();">
+					<input type="button" value="灰階" onclick="Photo_Uploader.toGrayscale();">
+					<input type="button" value="負片" onclick="Photo_Uploader.toInv();">
+					<input type="button" value="放馬賽克" onclick="Photo_Uploader.open_mosaic_mode();">
+					<input type="button" value="150x150" onclick="Photo_Uploader.canvas_resize(150);">
+					<input type="button" value="300x300" onclick="Photo_Uploader.canvas_resize(300);">
+				</div>
+
+				<div class="upload_img_file_block">
+					上傳圖片：
+					<input type="file" name="" id="fileupload" accept="image/*">
+				</div>
+
+				<div class="upload_img_url_block">
+					上傳圖片(URL)：
+					<input type="text" value="http://www.ezonesoft.com.tw/JavaScript/images/Cow.jpg" name="">
+					<input type="button" value="上傳後端(Ajax PHP)" onclick="Photo_Uploader.save_img_by_url();" class="upload_btn">
+				</div>
+
+				<div class="upload_php_block">
+					儲存圖片(Ajax PHP)：
+					<input type="button" onclick="Photo_Uploader.save_img_base64();" value="後端儲存圖片" class="upload_btn">
+					<span class="status"></span>
+				</div><br/><br/>
+
+				<div class="progress_block">
+					前端瀏覽器上傳進度：<progress value="0"></progress>
+				</div><br/>
+
+				<div class="progress_block_php">
+					後端PHP上傳進度：<progress value="0"></progress>
+				</div><br/>
+
+				<div class="download_block">
+					<a href="file/test.jpg" target="_blank">Server 圖片連結</a>
+				</div><br/>
+
+				<div class="burn_block">
+					<input type="button" value="後端原圖生成 15x15 30x30 45x45 尺寸縮圖 (請先儲存)" onclick="Photo_Uploader.burn_some_size();" class="upload_btn">
+				</div><br/>
+
+				<div class="show_burn_block" style="display:none;">
+					<img src="file/15x15.jpg" name="1" alt="">
+					<img src="file/30x30.jpg" name="2" alt="">
+					<img src="file/45x45.jpg" name="3" alt="">
+				</div>
+
+			</div>
+		</div>
+
+	</body>
+
+</html>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/photo_uploader.js"></script>
