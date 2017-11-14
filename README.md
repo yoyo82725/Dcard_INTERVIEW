@@ -33,14 +33,14 @@ Dcard 每天都有大量使用者上傳圖片，請設計一組後端服務及�
 
 # Photo Uploader
 
-拖曳上傳 & 傳統上傳 & URL上傳 & 進度條
+拖曳上傳 & 傳統上傳 & URL上傳 & 進度條 <br/>
 ![image](https://raw.githubusercontent.com/yoyo82725/Dcard_INTERVIEW/master/photo_uploader1.JPG)
 
-影像裁剪
+影像裁剪 <br/>
 ![image](https://raw.githubusercontent.com/yoyo82725/Dcard_INTERVIEW/master/photo_uploader2.JPG)
 
-灰階 & 負片
+灰階 & 負片 <br/>
 ![image](https://raw.githubusercontent.com/yoyo82725/Dcard_INTERVIEW/master/photo_uploader3.JPG)
 
-儲存 & 縮圖
+儲存 & 縮圖 <br/>
 ![image](https://raw.githubusercontent.com/yoyo82725/Dcard_INTERVIEW/master/photo_uploader4.JPG)
